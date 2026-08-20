@@ -19,8 +19,12 @@ public class SensorReadingService {
   }
 
   public SensorReading saveSensorReading(SensorReadingDto sensorReadingDto) {
-    //TODO: Task 3
-    return null;
+    return sensorReadingRepository.save(
+        new SensorReading(
+            sensorReadingDto,
+            sensorRepository.getReferenceById(sensorReadingDto.sensorId())
+        )
+    );
   }
 
 }

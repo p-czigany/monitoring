@@ -34,11 +34,30 @@ public class Sensor {
   @OneToMany(mappedBy = "sensor")
   private List<Alert> alerts;
 
-  public Sensor() {}
+  public Sensor() {
+    this(null, null, null, null, null);
+  }
+
+  public Sensor(UUID id) {
+    this(id, null, null, null, null);
+  }
 
   public Sensor(String name, SensorType type) {
+    this(null, name, type, null, null);
+  }
+
+  public Sensor(
+      final UUID id,
+      final String name,
+      final SensorType type,
+      final List<SensorReading> sensorReadings,
+      final List<Alert> alerts
+  ) {
+    this.id = id;
     this.name = name;
     this.type = type;
+    this.sensorReadings = sensorReadings;
+    this.alerts = alerts;
   }
 
   public UUID getId() {

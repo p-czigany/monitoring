@@ -30,6 +30,7 @@ public class Alert {
   private Sensor sensor;
 
   public Alert() {
+    this(null, null, null, null);
   }
 
   public Alert(
@@ -37,6 +38,16 @@ public class Alert {
       LocalDateTime timestamp,
       Sensor sensor
   ) {
+    this(null, message, timestamp, sensor);
+  }
+
+  public Alert(
+      Long id,
+      String message,
+      LocalDateTime timestamp,
+      Sensor sensor
+  ) {
+    this.id = id;
     this.message = message;
     this.timestamp = timestamp;
     this.sensor = sensor;

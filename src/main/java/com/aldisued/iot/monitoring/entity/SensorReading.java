@@ -1,5 +1,6 @@
 package com.aldisued.iot.monitoring.entity;
 
+import com.aldisued.iot.monitoring.dto.SensorReadingDto;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -30,6 +31,19 @@ public class SensorReading {
   private Sensor sensor;
 
   public SensorReading() {
+    this(null, null, null, null);
+  }
+
+  public SensorReading(
+      SensorReadingDto sensorReadingDto,
+      Sensor sensor
+  ) {
+    this(
+        null,
+        valueFromDto(sensorReadingDto),
+        timestampFromDto(sensorReadingDto),
+        sensor
+    );
   }
 
   public SensorReading(
@@ -37,9 +51,29 @@ public class SensorReading {
       LocalDateTime timestamp,
       Sensor sensor
   ) {
+    this(null, value, timestamp, sensor);
+  }
+
+  public SensorReading(
+      Long id,
+      Double value,
+      LocalDateTime timestamp,
+      Sensor sensor
+  ) {
+    this.id = id;
     this.value = value;
     this.timestamp = timestamp;
     this.sensor = sensor;
+  }
+
+  private static Double valueFromDto(SensorReadingDto sensorReadingDto) {
+    return sensorReadingDto.value();
+  }
+
+  private static LocalDateTime timestampFromDto(
+      SensorReadingDto sensorReadingDto
+  ) {
+    return sensorReadingDto.timestamp();
   }
 
   public Long getId() {
