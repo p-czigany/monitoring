@@ -16,7 +16,8 @@ public class AlertService {
   private final AlertRepository alertRepository;
   private final SensorRepository sensorRepository;
   private final KafkaTemplate<String, AlertDto> kafkaTemplate;
-  public AlertService(AlertRepository alertRepository, SensorRepository sensorRepository,
+  public AlertService(AlertRepository alertRepository,
+      SensorRepository sensorRepository,
       KafkaTemplate<String, AlertDto> kafkaTemplate) {
     this.alertRepository = alertRepository;
     this.sensorRepository = sensorRepository;
@@ -24,8 +25,15 @@ public class AlertService {
   }
 
   public Alert saveAlert(AlertDto alertDto) {
-    // TODO: Task 6
-    return null;
+    final Alert alert = alertRepository.save(
+        new Alert(
+            alertDto.message(),
+            alertDto.timestamp(),
+            sensorRepository.getReferenceById(alertDto.sensorId())
+        )
+    );
+    kafkaTemplate.send("alerts", alertDto);
+    return alert;
   }
 
   public AlertDto findLastAlertBySensorId(UUID sensorId) {

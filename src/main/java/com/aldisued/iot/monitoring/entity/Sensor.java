@@ -39,10 +39,6 @@ public class Sensor {
     this(null, null, null, null, null);
   }
 
-  public Sensor(UUID id) {
-    this(id, null, null, null, null);
-  }
-
   public Sensor(String name, SensorType type) {
     this(null, name, type, null, null);
   }

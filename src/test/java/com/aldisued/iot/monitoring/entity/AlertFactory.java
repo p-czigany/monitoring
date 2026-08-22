@@ -35,4 +35,12 @@ public class AlertFactory {
         new SensorFactory().testSensor(sensorId)
     );
   }
+
+  public Alert alert(
+      final String message,
+      final LocalDateTime timestamp,
+      final Sensor sensor
+  ) {
+    return new Alert(42L, message, timestamp, sensor);
+  }
 }

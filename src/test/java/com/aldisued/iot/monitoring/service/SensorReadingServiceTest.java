@@ -8,6 +8,7 @@ import static org.mockito.Mockito.when;
 
 import com.aldisued.iot.monitoring.dto.SensorReadingDto;
 import com.aldisued.iot.monitoring.entity.Sensor;
+import com.aldisued.iot.monitoring.entity.SensorFactory;
 import com.aldisued.iot.monitoring.entity.SensorReading;
 import com.aldisued.iot.monitoring.repository.SensorReadingRepository;
 import com.aldisued.iot.monitoring.repository.SensorRepository;
@@ -43,7 +44,7 @@ class SensorReadingServiceTest {
   @Test
   void usesSensorIdFromDto() {
     when(sensorRepository.getReferenceById(sensorId))
-        .thenReturn(new Sensor(sensorId));
+        .thenReturn(new SensorFactory().testSensor(sensorId));
 
     new SensorReadingService(sensorReadingRepository, sensorRepository)
         .saveSensorReading(sensorReadingDto);
@@ -54,7 +55,7 @@ class SensorReadingServiceTest {
   @Test
   void obtainsSensorReferenceBeforeSaving() {
     when(sensorRepository.getReferenceById(sensorId))
-        .thenReturn(new Sensor(sensorId));
+        .thenReturn(new SensorFactory().testSensor(sensorId));
 
     new SensorReadingService(sensorReadingRepository, sensorRepository)
         .saveSensorReading(sensorReadingDto);
@@ -68,7 +69,7 @@ class SensorReadingServiceTest {
   void constructsSensorReadingWithCorrectValueAndTimestamp() {
     LocalDateTime timestamp = LocalDateTime.of(2026, 8, 20, 12, 30);
     when(sensorRepository.getReferenceById(sensorId))
-        .thenReturn(new Sensor(sensorId));
+        .thenReturn(new SensorFactory().testSensor(sensorId));
 
     new SensorReadingService(sensorReadingRepository, sensorRepository)
         .saveSensorReading(
@@ -85,7 +86,7 @@ class SensorReadingServiceTest {
 
   @Test
   void assignsSensorReferenceToSensorReading() {
-    Sensor sensor = new Sensor(sensorId);
+    Sensor sensor = new SensorFactory().testSensor(sensorId);
     when(sensorRepository.getReferenceById(sensorId)).thenReturn(sensor);
 
     new SensorReadingService(sensorReadingRepository, sensorRepository)
@@ -100,7 +101,7 @@ class SensorReadingServiceTest {
   @Test
   void callsSensorReadingRepositorySave() {
     when(sensorRepository.getReferenceById(sensorId))
-        .thenReturn(new Sensor(sensorId));
+        .thenReturn(new SensorFactory().testSensor(sensorId));
 
     new SensorReadingService(sensorReadingRepository, sensorRepository)
         .saveSensorReading(sensorReadingDto);
@@ -111,7 +112,7 @@ class SensorReadingServiceTest {
   @Test
   void returnsEntityReturnedByRepository() {
     when(sensorRepository.getReferenceById(sensorId))
-        .thenReturn(new Sensor(sensorId));
+        .thenReturn(new SensorFactory().testSensor(sensorId));
     when(sensorReadingRepository.save(any(SensorReading.class)))
         .thenReturn(persistedReading);
 
